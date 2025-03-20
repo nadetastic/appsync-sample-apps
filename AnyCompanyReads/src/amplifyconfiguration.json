@@ -1,0 +1,16 @@
+{
+    "Auth": {
+        "Cognito": {
+            "userPoolId": "",
+            "userPoolClientId": ""
+        }
+    },
+    "API": {
+        "GraphQL": {
+            "endpoint": "",
+            "region": "",
+            "defaultAuthMode": "",
+            "apiKey": ""
+        }
+    }
+}

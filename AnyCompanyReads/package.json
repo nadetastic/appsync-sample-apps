@@ -1,0 +1,34 @@
+{
+  "name": "anycompany_reads_frontend",
+  "private": true,
+  "version": "2.0.0",
+  "type": "module",
+  "scripts": {
+    "start": "vite --mode development",
+    "start-local": "vite --mode production",
+    "build": "vite build --mode production",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@auth0/auth0-react": "^2.2.4",
+    "@aws-amplify/ui-react": "^6.1.6",
+    "@cloudscape-design/components": "^3.0.600",
+    "@cloudscape-design/global-styles": "^1.0.27",
+    "aws-amplify": "^6.0.27",
+    "jwt-decode": "^4.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.22.3"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.74",
+    "@types/react-dom": "^18.2.24",
+    "@vitejs/plugin-react": "^4.2.1",
+    "eslint": "^8.45.0",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.3",
+    "vite": "^5.2.8"
+  }
+}
