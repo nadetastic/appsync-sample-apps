@@ -3,14 +3,18 @@ export const COLS = 7;
 export const EMPTY = 0;
 export const PLAYER1 = 1;
 export const PLAYER2 = 2;
+export const WAITING = "Waiting for player...";
+
 export type GameState = {
   board: number[][];
-  currentPlayer: number;
+  currentPlayer: 1 | 2;
   winner: number | null;
   gameOver: boolean;
   player1Name: string;
   player2Name: string;
+  user?: string;
 };
+
 type Action =
   | { type: "PLACE_PIECE"; col: number }
   | { type: "RESET_GAME" }
@@ -24,6 +28,14 @@ export function gameReducer(state: GameState, action: Action): GameState {
       const newBoard = state.board.map((row) => [...row]);
       const row = findEmptyRow(newBoard, col);
       if (row === -1 || state.gameOver) return state;
+
+      if (state.player1Name === WAITING && state.user) {
+        state.player1Name = state.user;
+      }
+
+      if (state.player2Name === WAITING && state.user) {
+        state.player2Name = state.user;
+      }
 
       newBoard[row][col] = state.currentPlayer;
       const win = checkWin(newBoard, row, col, state.currentPlayer);
@@ -56,6 +68,7 @@ export function gameReducer(state: GameState, action: Action): GameState {
       return state;
   }
 }
+
 function checkWin(
   board: number[][],
   row: number,

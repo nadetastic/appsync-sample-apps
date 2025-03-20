@@ -14,13 +14,6 @@ import {
 import { Label } from "@/components/ui/label";
 
 import { useAuthenticator } from "@aws-amplify/ui-react";
-import { fetchAuthSession } from "aws-amplify/auth";
-import {
-  DynamoDBClient,
-  PutItemCommand,
-  ScanCommand,
-  UpdateItemCommand,
-} from "@aws-sdk/client-dynamodb";
 
 function generateShortCode() {
   const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";

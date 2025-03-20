@@ -10,16 +10,9 @@ import {
   EMPTY,
   PLAYER1,
   PLAYER2,
+  WAITING,
 } from "./GameState";
-import { events } from "aws-amplify/api";
 
-const publishGameState = async (
-  gameCode: string,
-  gameState: Partial<GameState>
-) => {
-  console.log(`Publishing game state for game ${gameCode}:`, gameState);
-  await events.post(`/game/${gameCode}`, gameState);
-};
 export function FourInARowComponent() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -34,8 +27,8 @@ export function FourInARowComponent() {
     currentPlayer: PLAYER1,
     winner: null,
     gameOver: false,
-    player1Name: isCreator ? playerName : "Waiting for player...",
-    player2Name: isCreator ? "Waiting for player..." : playerName,
+    player1Name: isCreator ? playerName : WAITING,
+    player2Name: isCreator ? WAITING : playerName,
   });
 
   const stateRef = useRef(state);
@@ -44,25 +37,7 @@ export function FourInARowComponent() {
     stateRef.current = state;
   }, [state]);
 
-  useEffect(() => {
-    const subscribeToGameState = async (gameCode: string) => {
-      const channel = await events.connect(`/game/${gameCode}`, {});
-
-      const sub = channel.subscribe({
-        next: (data) => {
-          console.log(data.event);
-          dispatch({ type: "UPDATE_GAME_STATE", newState: data.event });
-        },
-        error: (err) => console.error("error", err),
-      });
-      return sub;
-    };
-
-    const sub = subscribeToGameState(gameCode);
-    return () => {
-      Promise.resolve(sub).then((sub) => sub.unsubscribe());
-    };
-  }, [gameCode]);
+  // Paste subscribe logic here
 
   function handleClick(col: number) {
     if (
@@ -73,7 +48,6 @@ export function FourInARowComponent() {
       return;
 
     const newState = gameReducer(state, { type: "PLACE_PIECE", col });
-    dispatch({ type: "PLACE_PIECE", col });
 
     publishGameState(gameCode, {
       board: newState.board,
